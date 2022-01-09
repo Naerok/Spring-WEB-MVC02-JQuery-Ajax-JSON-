@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.board.domain.Board;
 import kr.board.mapper.BoardMapper;
@@ -77,6 +78,14 @@ public class BoardController {
 	public String boardUpdatePost(Board vo) {
 		mapper.boardUpdate(vo);
 		return "redirect:/boardList.do";
+	}
+	
+	@RequestMapping("/boardListAjax.do")
+	public @ResponseBody List<Board> boardListAjax() {
+		List<Board> list = mapper.boardList();
+		//여기서 json data format로 응답.
+		// List<Board> --Jackson-->String(JSON)
+		return list;
 	}
 	
 }
