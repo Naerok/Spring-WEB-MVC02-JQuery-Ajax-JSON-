@@ -88,4 +88,9 @@ public class BoardController {
 		return list;
 	}
 	
+	@RequestMapping("boardInsertAjax.do")
+	public @ResponseBody void boardInsertAjax(Board vo) {
+		mapper.boardInsert(vo);
+	}
+	
 }

@@ -28,7 +28,7 @@
   	function listView(data){ // [{ board },{ board  }]}
   		// alert(data);
   		// 동적 게시판 만들기
-  		var blist = "<table class='table'>";
+  		var blist = "<table class='table table-hover'>"; // table-hover 마우스를 올렸을때 표시
   		blist+="<tr>"
   		blist+="<td>번호</td>";
   		blist+="<td>제목</td>";
@@ -48,9 +48,41 @@
   			
   		});
   		
+  		blist+="<tr>";
+  		blist+="<td colspan='5''>";
+  		blist+="<button class='btn btn-primary btn-sm' onclick='goForm()'>글쓰기</button>";
+  		blist+="</td>";
+  		blist+="</tr>";
+  		
+  		
   		blist+="</table>"
+  		$(".blist").html(blist);
   		
   	}
+  	
+  	function goForm(){
+  		if($(".rform").css("display")=="block"){
+  			// $(".rform").css("display","none");
+  			$(".rform").slideUp();
+  		}else{
+  			// $(".rform").css("display","block");
+  			$(".rform").slideDown();
+  		}
+  	}
+  	
+  	function goInsert(){ // title, contents, writer
+  		var fData = $("#frm").serialize();
+  		alert(fData);
+  		$.ajax({
+  			url : "${cpath}/boardInsertAjax.do",
+  			type : "post",
+  			data : fData,
+  			success : loadList,
+  			error : function(){ alert("error");}
+  		});
+  		
+  	}
+  	
   </script>
 </head>
 <body>
@@ -59,7 +91,39 @@
 	<h2>Spring WEB MVC02(JQuery+Ajax+JSON)</h2>
 	<div class = "panel panel-default">
 	<div class = "panel-heading">SPRING BOARD</div>
-	<div class = "panel-body">Panel Content</div>
+	<div class = "panel-body blist">Panel Content</div>
+	<div class = "panel-body rform" style="display: none">
+		<!-- 글쓰기 화면 -->
+		<form id="frm" class="form-horizontal" method="post">
+		  <div class="form-group">
+		    <label class="control-label col-sm-2" for="title">제목:</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="title" name="title" placeholder="Enter email">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="control-label col-sm-2" for="contents">내용:</label>
+		    <div class="col-sm-10">
+		    	<textarea class="form-control" rows="8" id="contents" name="contents"></textarea>
+		    </div>
+		  </div>
+		  
+		  
+		  <div class="form-group">
+		    <label class="control-label col-sm-2" for="writer">작성자:</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="writer" name="writer" placeholder="Enter writer">
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <button type="button" class="btn btn-success btn-sm" onclick="goInsert()">글쓰기</button>
+		      <button type="reset" class="btn btn-warning btn-sm">취소</button>
+		    </div>
+		  </div>
+		</form>
+	</div>
 	<div class = "panel-footer">(panel-footer) 한글한글</div>
 	</div>
 </div>
