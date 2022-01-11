@@ -40,24 +40,46 @@
   		$.each(data,function(index,obj){
   	  		blist+="<tr>"
   	    	blist+="<td>"+obj.idx+"</td>";
-  	    	blist+="<td>"+obj.title+"</td>";
+  	    	blist+="<td><a href='javascript:goContent("+obj.idx+")'>"+obj.title+"</a></td>";
   	    	blist+="<td>"+obj.writer+"</td>";
   	    	blist+="<td>"+obj.indate+"</td>";
   	    	blist+="<td>"+obj.count+"</td>";  	    	
-  	    	blist+="</tr>"  			
-  			
-  		});
+  	    	blist+="</tr>"
+  	    	
+  	    	// 제목 눌렀을때 나오는 화면
+  	    	blist+="<tr id='contentsView"+obj.idx+"' style='display:none'>";
+  	    	blist+="<td>내용</td>";
+  	    	blist+="<td colspan='4'><textarea rows='7' class='form-control'>"+obj.contents+"</textarea>";
+  	    	blist+="<br/>";
+	  		blist+="<button class='btn btn-info btn-sm'>수정</button>";
+	  		blist+="&nbsp;<button class='btn btn-warning btn-sm'>취소</button>";
+	  		blist+="&nbsp;<button class='btn btn-danger btn-sm' onclick='goClose("+obj.idx+")'>닫기</button>";
+	  		blist+="</td>";
+  	    	blist+="</tr>";
+  	    	
+  	    });
   		
   		blist+="<tr>";
-  		blist+="<td colspan='5''>";
-  		blist+="<button class='btn btn-primary btn-sm' onclick='goForm()'>글쓰기</button>";
+  		blist+="<td colspan='5'>";
+  		blist+="<button class = 'btn btn-primary btn-sm' onclick='goForm()'>글쓰기</button>";
   		blist+="</td>";
   		blist+="</tr>";
   		
   		
   		blist+="</table>"
   		$(".blist").html(blist);
-  		
+  	}
+  	
+  	function goClose(idx){
+  		$("#contentsView"+idx).css("display","none");
+  	}
+  	
+  	function goContent(idx){
+  		if($("#contentsView"+idx).css("display")=="none"){
+	       $("#contentsView"+idx).css("display","table-row");
+  		}else{
+  		   $("#contentsView"+idx).css("display","none");
+  		}
   	}
   	
   	function goForm(){
@@ -80,6 +102,10 @@
   			success : loadList,
   			error : function(){ alert("error");}
   		});
+  		
+  		// 취소버튼 강제로 클릭
+  		$(".cancel").trigger("click");
+  		$(".rform").css("display","none");
   		
   	}
   	
@@ -119,7 +145,7 @@
 		  <div class="form-group">
 		    <div class="col-sm-offset-2 col-sm-10">
 		      <button type="button" class="btn btn-success btn-sm" onclick="goInsert()">글쓰기</button>
-		      <button type="reset" class="btn btn-warning btn-sm">취소</button>
+		      <button type="reset" class="btn btn-warning btn-sm cancel">취소</button>
 		    </div>
 		  </div>
 		</form>
