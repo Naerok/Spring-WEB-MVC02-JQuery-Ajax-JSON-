@@ -93,4 +93,10 @@ public class BoardController {
 		mapper.boardInsert(vo);
 	}
 	
+	@RequestMapping("boardContentAjax.do")
+	public @ResponseBody void boardContentUpdateAjax(Board vo) {
+		mapper.boardContentUpdateAjax(vo);
+	}
+	
+	
 }

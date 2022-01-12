@@ -15,6 +15,18 @@
   	$(document).ready(function(){
   		loadList();
   	});
+  	
+  	function upClick(idx){
+  		var contents=$("#contents"+idx).val();
+  		$.ajax({
+  			url: "${cpath}/boardContentUpdateAjax.do",
+  			type: "post",
+  			data: {"idx":idx,"contents":contents},
+  			success: loadList,
+  			error: function(){alert("error");}
+  		});
+  	}
+  	
   	function loadList(){
   		$.ajax({
   			url: "${cpath}/boardListAjax.do",
@@ -72,6 +84,10 @@
   		
   		blist+="</table>"
   		$(".blist").html(blist);
+  	}
+  	
+  	function goDelete(idx){
+  		
   	}
   	
   	function goClose(idx){

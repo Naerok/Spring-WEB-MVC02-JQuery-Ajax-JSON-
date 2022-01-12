@@ -3,6 +3,7 @@ package kr.board.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Update;
 
 import kr.board.domain.Board;
 
@@ -15,5 +16,8 @@ public interface BoardMapper {
 	public void boardDelete(int idx); //SQL(delete)
 	
 	public void boardUpdate(Board vo); //SQL(update~)
+	
+	@Update("update board set contents=#{contents} where idx=#{idx}")
+	public void boardContentUpdateAjax(Board vo);
 	
 }
