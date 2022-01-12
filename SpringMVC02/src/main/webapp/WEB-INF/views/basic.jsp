@@ -35,6 +35,8 @@
   		blist+="<td>작성자</td>";
   		blist+="<td>작성일</td>";
   		blist+="<td>조회수</td>";
+  		blist+="<td>수정</td>";
+  		blist+="<td>삭제</td>";
   		blist+="</tr>"
   		
   		$.each(data,function(index,obj){
@@ -43,13 +45,15 @@
   	    	blist+="<td><a href='javascript:goContent("+obj.idx+")'>"+obj.title+"</a></td>";
   	    	blist+="<td>"+obj.writer+"</td>";
   	    	blist+="<td>"+obj.indate+"</td>";
-  	    	blist+="<td>"+obj.count+"</td>";  	    	
+  	    	blist+="<td>"+obj.count+"</td>";
+  	    	blist+="<td><button class='btn btn-info btn-sm'>수정</button></td>"
+  	    	blist+="<td><button class='btn btn-warning btn-sm' onclick='goDelete("+obj.idx+")'>삭제</button></td>"
   	    	blist+="</tr>"
   	    	
   	    	// 제목 눌렀을때 나오는 화면
   	    	blist+="<tr id='contentsView"+obj.idx+"' style='display:none'>";
   	    	blist+="<td>내용</td>";
-  	    	blist+="<td colspan='4'><textarea rows='7' class='form-control'>"+obj.contents+"</textarea>";
+  	    	blist+="<td colspan='6'><textarea rows='7' class='form-control'>"+obj.contents+"</textarea>";
   	    	blist+="<br/>";
 	  		blist+="<button class='btn btn-info btn-sm'>수정</button>";
 	  		blist+="&nbsp;<button class='btn btn-warning btn-sm'>취소</button>";
@@ -60,7 +64,7 @@
   	    });
   		
   		blist+="<tr>";
-  		blist+="<td colspan='5'>";
+  		blist+="<td colspan='7'>";
   		blist+="<button class = 'btn btn-primary btn-sm' onclick='goForm()'>글쓰기</button>";
   		blist+="</td>";
   		blist+="</tr>";
