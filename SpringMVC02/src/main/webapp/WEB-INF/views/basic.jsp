@@ -17,7 +17,7 @@
   	});
   	
   	function upClick(idx){
-  		var contents=$("#contents"+idx).val();
+  		var contents=$("#c"+idx).val();
   		$.ajax({
   			url: "${cpath}/boardContentUpdateAjax.do",
   			type: "post",
@@ -58,16 +58,16 @@
   	    	blist+="<td>"+obj.writer+"</td>";
   	    	blist+="<td>"+obj.indate+"</td>";
   	    	blist+="<td>"+obj.count+"</td>";
-  	    	blist+="<td><button class='btn btn-info btn-sm'>수정</button></td>"
+  	    	blist+="<td><button class='btn btn-info btn-sm' onclick=''>수정</button></td>"
   	    	blist+="<td><button class='btn btn-warning btn-sm' onclick='goDelete("+obj.idx+")'>삭제</button></td>"
   	    	blist+="</tr>"
   	    	
   	    	// 제목 눌렀을때 나오는 화면
   	    	blist+="<tr id='contentsView"+obj.idx+"' style='display:none'>";
   	    	blist+="<td>내용</td>";
-  	    	blist+="<td colspan='6'><textarea rows='7' class='form-control'>"+obj.contents+"</textarea>";
+  	    	blist+="<td colspan='6'><textarea rows='7' id='c"+obj.idx+"' class='form-control'>"+obj.contents+"</textarea>";
   	    	blist+="<br/>";
-	  		blist+="<button class='btn btn-info btn-sm'>수정</button>";
+	  		blist+="<button class='btn btn-info btn-sm' conclick='upClick("+obj.idx+")'>수정</button>";
 	  		blist+="&nbsp;<button class='btn btn-warning btn-sm'>취소</button>";
 	  		blist+="&nbsp;<button class='btn btn-danger btn-sm' onclick='goClose("+obj.idx+")'>닫기</button>";
 	  		blist+="</td>";
@@ -87,7 +87,14 @@
   	}
   	
   	function goDelete(idx){
-  		
+  		var contents=$("#contents"+idx).val();
+  		$.ajax({
+  			url: "${cpath}/boardDeleteAjax.do",
+  			type: "get",
+  			data: {"idx":idx},
+  			success: loadList,
+  			error: function(){alert("error");}
+  		});
   	}
   	
   	function goClose(idx){
