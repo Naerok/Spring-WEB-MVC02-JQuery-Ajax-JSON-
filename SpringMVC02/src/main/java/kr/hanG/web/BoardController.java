@@ -104,5 +104,10 @@ public class BoardController {
 		mapper.boardDelete(idx);
 	}
 	
+	@RequestMapping("boardTWUpdateAjax.do")
+	public @ResponseBody void boardTWUpdateAjax(Board vo) {
+		mapper.boardTWUpdateAjax(vo);
+	}
+	
 	
 }

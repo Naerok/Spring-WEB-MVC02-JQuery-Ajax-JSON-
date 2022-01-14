@@ -54,11 +54,11 @@
   		$.each(data,function(index,obj){
   	  		blist+="<tr>"
   	    	blist+="<td>"+obj.idx+"</td>";
-  	    	blist+="<td><a href='javascript:goContent("+obj.idx+")'>"+obj.title+"</a></td>";
-  	    	blist+="<td>"+obj.writer+"</td>";
+  	    	blist+="<td id='t"+obj.idx+"'><a href='javascript:goContent("+obj.idx+")'>"+obj.title+"</a></td>";
+  	    	blist+="<td id='w"+obj.idx+"'>"+obj.writer+"</td>";
   	    	blist+="<td>"+obj.indate+"</td>";
   	    	blist+="<td>"+obj.count+"</td>";
-  	    	blist+="<td><button class='btn btn-info btn-sm' onclick=''>수정</button></td>"
+  	    	blist+="<td id='u"+obj.idx+"'><button class='btn btn-info btn-sm' onclick='goUpdate("+obj.idx+")'>수정</button></td>"
   	    	blist+="<td><button class='btn btn-warning btn-sm' onclick='goDelete("+obj.idx+")'>삭제</button></td>"
   	    	blist+="</tr>"
   	    	
@@ -67,7 +67,7 @@
   	    	blist+="<td>내용</td>";
   	    	blist+="<td colspan='6'><textarea rows='7' id='c"+obj.idx+"' class='form-control'>"+obj.contents+"</textarea>";
   	    	blist+="<br/>";
-	  		blist+="<button class='btn btn-info btn-sm' conclick='upClick("+obj.idx+")'>수정</button>";
+	  		blist+="<button class='btn btn-info btn-sm' onclick='upClick("+obj.idx+")'>수정</button>";
 	  		blist+="&nbsp;<button class='btn btn-warning btn-sm'>취소</button>";
 	  		blist+="&nbsp;<button class='btn btn-danger btn-sm' onclick='goClose("+obj.idx+")'>닫기</button>";
 	  		blist+="</td>";
@@ -84,6 +84,33 @@
   		
   		blist+="</table>"
   		$(".blist").html(blist);
+  	}
+  	
+  	function goUpdate(idx){
+  		
+  		var title=$("#t"+idx).text();
+  		var newTitle="<input type='text' id='nt"+idx+"' class='form-control' value='"+title+"'>";
+  		$("#t"+idx).html(newTitle);
+  		
+  		var writer=$("#w"+idx).text();
+  		var newWriter="<input type='text' id='nw"+idx+"' class='form-control' value='"+writer+"'>";
+  		$("#w"+idx).html(newWriter);
+  		
+  		var newUpdate="<button class='btn btn-success btn-sm' onclick='update("+idx+")'>수정하기</button>"
+  		$("#u"+idx).html(newUpdate);
+  	}
+  	
+  	function update(idx){
+  		var title=$("#nt"+idx).val();
+  		var writer=$("#nw"+idx).val();
+  		
+  		$.ajax({
+  			url: "${cpath}/boardTWUpdateAjax.do",
+  			type: "post",
+  			data: {"idx":idx,"title":title,"writer":writer},
+  			success: loadList,
+  			error: function(){alert("error");}
+  		});
   	}
   	
   	function goDelete(idx){
