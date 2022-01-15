@@ -21,7 +21,9 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="kr.hanG.web" />
+	<!-- Controller(pojo)를 객체 생성하는 부분 -->
+	<context:component-scan base-package="kr.board.web" />
+	<context:component-scan base-package="kr.board.service" />
 	
 	
 	

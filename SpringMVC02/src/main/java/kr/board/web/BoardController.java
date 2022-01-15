@@ -1,4 +1,4 @@
-package kr.hanG.web;
+package kr.board.web;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
